@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Send } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -21,7 +22,7 @@ export default function Home() {
       });
       i++;
       if (i >= text.length) clearInterval(interval);
-    }, 20);
+    }, 10);
   };
 
   const handleChat = async () => {
@@ -49,7 +50,10 @@ export default function Home() {
       setChat((prev) => [...prev, { role: "ai", text: "" }]);
       typeWriterEffect(data.response);
     } catch (error) {
-      setChat((prev) => [...prev, { role: "ai", text: "❌ Error: " + error.message }]);
+      setChat((prev) => [
+        ...prev,
+        { role: "ai", text: "❌ Error: " + error.message },
+      ]);
     }
 
     setLoading(false);
@@ -66,7 +70,8 @@ export default function Home() {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + "px";
+      textareaRef.current.style.height =
+        Math.min(textareaRef.current.scrollHeight, 120) + "px";
     }
   }, [message]);
 
@@ -77,12 +82,11 @@ export default function Home() {
   return (
     <div className="font-sans min-h-screen flex flex-col items-center justify-center text-white p-4 sm:p-6">
       <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded-2xl shadow-xl p-4 sm:p-6 w-full max-w-lg flex flex-col h-[85vh] sm:h-[80vh]">
-        
         {/* Header */}
-     <div className="relative mb-8">
+        <div className="relative mb-8">
           <h1 className="text-5xl sm:text-6xl font-black text-center relative ">
             <span className="stilt-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            S
+              S
             </span>
             <span className="stilt-text bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
               T
@@ -97,7 +101,7 @@ export default function Home() {
               T
             </span>
           </h1>
-        
+
           <p className="text-slate-400 text-center text-sm font-medium tracking-widest mt-2 uppercase">
             Elevated Conversations
           </p>
@@ -106,8 +110,11 @@ export default function Home() {
         {/* Chat Window */}
         <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2 custom-scrollbar">
           {chat.length === 0 && (
-            <p className="text-gray-400 text-center py-4">💡 Start chatting with AI!</p>
+            <p className="text-gray-400 text-center py-4">
+              💡 Start chatting with AI!
+            </p>
           )}
+
           {chat.map((msg, idx) => (
             <div
               key={idx}
@@ -119,13 +126,22 @@ export default function Home() {
                 className={`max-w-[85%] px-3 py-2 sm:px-4 sm:py-2 rounded-2xl text-sm ${
                   msg.role === "user"
                     ? "bg-blue-600 text-white rounded-br-none"
-                    : "bg-gray-700 text-gray-100 rounded-bl-none"
+                    : "bg-gray-800 text-gray-100 rounded-bl-none"
                 }`}
               >
-                {msg.text}
+                <div className="prose prose-invert max-w-none text-sm ">
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </div>
               </div>
             </div>
           ))}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="bg-gray-700 text-gray-100 rounded-2xl rounded-bl-none px-3 py-2 text-sm">
+                <span className="animate-pulse">AI is thinking...</span>
+              </div>
+            </div>
+          )}
           <div ref={chatEndRef} />
         </div>
 
@@ -159,24 +175,25 @@ export default function Home() {
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-track {
           background: rgba(255, 255, 255, 0.1);
           border-radius: 10px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: rgba(255, 255, 255, 0.2);
           border-radius: 10px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.3);
         }
-        
+
         /* Ensure proper viewport on mobile devices */
         @media (max-width: 640px) {
-          html, body {
+          html,
+          body {
             height: -webkit-fill-available;
           }
         }
