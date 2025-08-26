@@ -75,13 +75,33 @@ export default function Home() {
   }, [chat]);
 
   return (
-    <div className="font-sans min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-4 sm:p-6">
+    <div className="font-sans min-h-screen flex flex-col items-center justify-center text-white p-4 sm:p-6">
       <div className="bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded-2xl shadow-xl p-4 sm:p-6 w-full max-w-lg flex flex-col h-[85vh] sm:h-[80vh]">
         
         {/* Header */}
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-          AI Chat App
-        </h1>
+     <div className="relative mb-8">
+          <h1 className="text-5xl sm:text-6xl font-black text-center relative ">
+            <span className="stilt-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+            S
+            </span>
+            <span className="stilt-text bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+              T
+            </span>
+            <span className="stilt-text bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 bg-clip-text text-transparent">
+              I
+            </span>
+            <span className="stilt-text bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 bg-clip-text text-transparent">
+              L
+            </span>
+            <span className="stilt-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
+              T
+            </span>
+          </h1>
+        
+          <p className="text-slate-400 text-center text-sm font-medium tracking-widest mt-2 uppercase">
+            Elevated Conversations
+          </p>
+        </div>
 
         {/* Chat Window */}
         <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-2 custom-scrollbar">
